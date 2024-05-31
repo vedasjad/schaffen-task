@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:schaffen/core/theme/colors.dart';
 
+import '../../../../core/assets/assets.dart';
+
 class MySearchBar extends StatefulWidget {
   const MySearchBar({super.key});
 
@@ -73,13 +75,15 @@ class _MySearchBarState extends State<MySearchBar> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 )
-              : IconButton(
-                  icon: Icon(_isExpanded ? Icons.close : Icons.search),
-                  onPressed: () {
+              : GestureDetector(
+                  onTap: () {
                     setState(() {
-                      _isExpanded = !_isExpanded;
+                      _isExpanded = true;
                     });
                   },
+                  child: Image.asset(
+                    AppAssets.search,
+                  ),
                 ),
         ],
       ),

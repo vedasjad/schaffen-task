@@ -41,54 +41,58 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                     const Notifications(),
                     const ChatOptions(),
                     const MySearchBar(),
-                    ...List.generate(10, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: ListTile(
-                          leading: const CircleAvatar(
-                            radius: 25,
-                            backgroundImage: AssetImage(
-                              AppAssets.woman,
+                    ...List.generate(
+                      20,
+                      (index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: ListTile(
+                            leading: const CircleAvatar(
+                              radius: 25,
+                              backgroundImage: AssetImage(
+                                AppAssets.woman,
+                              ),
                             ),
-                          ),
-                          titleAlignment: ListTileTitleAlignment.top,
-                          title: const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Yashika",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
+                            titleAlignment: ListTileTitleAlignment.top,
+                            title: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Yashika",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  "29, India",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Container(
+                              height: 35,
+                              width: 110,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: index == 0
+                                    ? Colors.blueGrey
+                                    : AppColors.pink,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Text(
+                                index == 0 ? "Following" : "Add",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
                                 ),
                               ),
-                              Text(
-                                "29, India",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                          trailing: Container(
-                            height: 35,
-                            width: 110,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color:
-                                  index == 0 ? Colors.blueGrey : AppColors.pink,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Text(
-                              index == 0 ? "Following" : "Add",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

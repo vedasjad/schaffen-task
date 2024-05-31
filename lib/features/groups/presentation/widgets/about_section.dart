@@ -62,10 +62,10 @@ class _AboutSectionState extends State<AboutSection> {
             itemCount: 5,
             itemBuilder: (context, index) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(15),
                   border: Border.all(
                     color: AppColors.pink,
                   ),

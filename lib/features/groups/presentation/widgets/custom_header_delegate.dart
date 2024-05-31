@@ -78,7 +78,9 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
                       decoration: BoxDecoration(
                         color: Colors.transparent,
                         border: Border.all(
-                            color: Colors.white, width: imageSize / 2,),
+                          color: Colors.white,
+                          width: imageSize / 2,
+                        ),
                         borderRadius:
                             BorderRadius.circular(imageSize * progress),
                       ),
@@ -124,27 +126,100 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
                 ),
                 Stack(
                   children: [
-                    Opacity(
-                      opacity: progress > 1 ? 1 : progress,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        print("hh");
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 4,
+                                          width: 100,
+                                          margin: EdgeInsets.only(bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    ...List.generate(3, (index) {
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 20),
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              index == 0
+                                                  ? AppAssets.link
+                                                  : index == 1
+                                                      ? AppAssets.add
+                                                      : AppAssets.group,
+                                              height: 25,
+                                              width: 25,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              index == 0
+                                                  ? "Invite"
+                                                  : index == 1
+                                                      ? "Add Member"
+                                                      : "Add Group",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    })
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: Opacity(
+                        opacity: progress > 1 ? 1 : progress,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          child: const Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                    Opacity(
-                      opacity: textOpacity > 0 ? textOpacity : 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white, width: 1.5),
-                        ),
-                        child: const Icon(
-                          Icons.share,
-                          color: Colors.white,
+                    IgnorePointer(
+                      ignoring: progress >= 1,
+                      child: Opacity(
+                        opacity: textOpacity > 0 ? textOpacity : 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.white, width: 1.5),
+                          ),
+                          child: const Icon(
+                            Icons.share,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
