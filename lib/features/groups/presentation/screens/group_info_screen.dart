@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schaffen/core/theme/colors.dart';
+import 'package:schaffen/features/groups/presentation/widgets/my_search_bar.dart';
 import 'package:schaffen/features/groups/presentation/widgets/notifications.dart';
 
 import '../../../../core/assets/assets.dart';
@@ -16,7 +17,6 @@ class GroupInfoScreen extends StatefulWidget {
 }
 
 class _GroupInfoScreenState extends State<GroupInfoScreen> {
-  bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,88 +40,16 @@ class _GroupInfoScreenState extends State<GroupInfoScreen> {
                     const MediaWidget(),
                     const Notifications(),
                     const ChatOptions(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (!_isExpanded)
-                            const Text(
-                              "Members",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _isExpanded = !_isExpanded;
-                              });
-                            },
-                            child: AnimatedContainer(
-                              curve: Curves.easeInOut,
-                              duration: const Duration(seconds: 2),
-                              width: _isExpanded
-                                  ? MediaQuery.of(context).size.width * 0.75
-                                  : null,
-                              height: 40.0,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(28.0),
-                              ),
-                              child: Row(
-                                children: [
-                                  if (_isExpanded)
-                                    const Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16.0),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            hintText: 'Search...',
-                                            border: InputBorder.none,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  const Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          if (_isExpanded)
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _isExpanded = false;
-                                });
-                              },
-                              child: const Text(
-                                "Cancel",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    ...List.generate(15, (index) {
+                    const MySearchBar(),
+                    ...List.generate(10, (index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: ListTile(
                           leading: const CircleAvatar(
-                            radius:
-                                25, // Adjust the radius to change the size of the circle
+                            radius: 25,
                             backgroundImage: AssetImage(
                               AppAssets.woman,
-                            ), // Replace with your image URL
+                            ),
                           ),
                           titleAlignment: ListTileTitleAlignment.top,
                           title: const Column(

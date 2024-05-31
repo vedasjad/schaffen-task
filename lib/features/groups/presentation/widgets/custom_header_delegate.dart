@@ -55,55 +55,47 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
           child: SizedBox(
             height: imageSize,
             width: imageSize,
-            child: Image.asset(
-              AppAssets.weeknd,
-              height: finalImageSize,
-              fit: BoxFit.fitHeight,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                // Colors.green.withOpacity(progress < 0 ? 0 : progress>1?1:progress),
+                progress < 0.7 ? Colors.transparent : AppColors.red,
+                // BlendMode.srcOut,
+                BlendMode.srcOut,
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.red,
+                      backgroundBlendMode: BlendMode.dstOut,
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      width: imageSize,
+                      height: imageSize,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                            color: Colors.white, width: imageSize / 2,),
+                        borderRadius:
+                            BorderRadius.circular(imageSize * progress),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        // Positioned(
-        //   left: leftPadding,
-        //   top: topPadding + MediaQuery.of(context).padding.top,
-        //   child: Container(
-        //     height: imageSize,
-        //     width: imageSize,
-        //     padding: const EdgeInsets.all(5),
-        //     child: const Expanded(
-        //       child: CircleAvatar(
-        //         backgroundImage: AssetImage(
-        //           AppAssets.weeknd,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // AnimatedContainer(
-        //   duration: const Duration(seconds: 3),
-        //   child: Opacity(
-        //     opacity: textOpacity == 1 ? textOpacity : 0,
-        //     child: Positioned(
-        //       left: leftPadding,
-        //       top: topPadding + MediaQuery.of(context).padding.top,
-        //       child: SizedBox(
-        //         height: imageSize,
-        //         width: imageSize,
-        //         child: Image.asset(
-        //           AppAssets.weeknd,
-        //           height: finalImageSize,
-        //           fit: BoxFit.fitHeight,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
         Positioned(
           bottom: 0,
-          left: progress * (50 + finalImageSize + 10),
+          left: progress * (50 + finalImageSize + 15),
           right: 0,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: 100 - progress * 30,
+            height: 90 - progress * 30,
             color: AppColors.red.withOpacity(textOpacity > 0 ? textOpacity : 0),
             padding: EdgeInsets.all(16 - 8 * progress),
             child: Row(
@@ -133,7 +125,7 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
                 Stack(
                   children: [
                     Opacity(
-                      opacity: progress,
+                      opacity: progress > 1 ? 1 : progress,
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         child: const Icon(
@@ -143,7 +135,7 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
                       ),
                     ),
                     Opacity(
-                      opacity: textOpacity,
+                      opacity: textOpacity > 0 ? textOpacity : 0,
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -178,18 +170,19 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class TransparentCircleContainer extends StatelessWidget {
+class CircularHoleContainer extends StatelessWidget {
   final double width;
   final double height;
-  final double circleDiameter;
+  final double holeSize;
   final Color backgroundColor;
+  final Widget? child;
 
-  const TransparentCircleContainer({
-    super.key,
+  CircularHoleContainer({
     required this.width,
     required this.height,
-    required this.circleDiameter,
+    required this.holeSize,
     required this.backgroundColor,
+    this.child,
   });
 
   @override
@@ -200,40 +193,18 @@ class TransparentCircleContainer extends StatelessWidget {
           width: width,
           height: height,
           color: backgroundColor,
+          child: child,
         ),
         Center(
-          child: ClipPath(
-            clipper: CircleClipper(circleDiameter),
+          child: ClipOval(
             child: Container(
-              width: width,
-              height: height,
+              width: holeSize,
+              height: holeSize,
               color: Colors.transparent,
             ),
           ),
         ),
       ],
     );
-  }
-}
-
-class CircleClipper extends CustomClipper<Path> {
-  final double circleDiameter;
-
-  CircleClipper(this.circleDiameter);
-
-  @override
-  Path getClip(Size size) {
-    final path = Path()
-      ..addOval(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
-        radius: circleDiameter / 2,
-      ));
-    path.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
-    return path..fillType = PathFillType.evenOdd;
-  }
-
-  @override
-  bool shouldReclip(CircleClipper oldClipper) {
-    return oldClipper.circleDiameter != circleDiameter;
   }
 }

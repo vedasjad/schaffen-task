@@ -24,7 +24,6 @@ class _NotificationsState extends State<Notifications> {
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
-            maxLines: 5,
             overflow: TextOverflow.ellipsis,
           ),
           Switch(
